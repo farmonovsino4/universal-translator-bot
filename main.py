@@ -2,6 +2,9 @@ from aiogram import Bot, Dispatcher, executor, types
 import logging
 import os
 from dotenv import load_dotenv
+from googletrans import Translator
+from deep_translator import GoogleTranslator
+import pytesseract
 
 load_dotenv()
 

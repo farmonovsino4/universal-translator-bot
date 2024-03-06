@@ -18,7 +18,7 @@ load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=os.getenv('TOKEN'))
+bot = Bot(token="7082079364:AAGvpiEfAXb3VqxpO7mqDQy4RBhumKvlCc0")
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])

@@ -15,7 +15,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    await message.reply(f"Salom {message.from_user.full_name}\nmen universal tarjimon botman")
+    await message.reply(f"Salom <b>{message.from_user.full_name}</b>\nmen universal tarjimon botman", parse_mode='html')
 
 @dp.message_handler()
 async def message(message: types.Message):

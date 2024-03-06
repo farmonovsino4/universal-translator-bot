@@ -9,6 +9,7 @@ from PIL import Image
 from googletrans import Translator
 from gtts import gTTS
 import os
+import io
 
 translator = Translator()
 
@@ -56,7 +57,10 @@ async def message(message: types.Message):
 @dp.message_handler(content_types=['photo'])
 async def image_to_string(message: types.Message):
     await message.answer("qabul qilindi")
-    img = Image.open(message.photo[-1].file_id)
+    photo = message.photo[-1].file_id
+    file_path = await bot.get_file(photo)
+    image_bytes = await file_path.download()
+    img = Image.open(io.BytesIO(image_bytes))
     text = pytesseract.image_to_string(img)
     await message.answer(text)
 

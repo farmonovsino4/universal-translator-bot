@@ -5,11 +5,14 @@ from dotenv import load_dotenv
 from googletrans import Translator
 from deep_translator import GoogleTranslator
 import pytesseract
+from PIL import Image
 from googletrans import Translator
 from gtts import gTTS
 import os
 
 translator = Translator()
+
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 load_dotenv()
 
@@ -49,6 +52,13 @@ async def message(message: types.Message):
         await message.answer_voice(open('voice.mp3', 'rb'))
         await message.answer(translated_uz)
     os.remove("voice.mp3")
+
+@dp.message_handler(content_types=['photo'])
+async def image_to_string(message: types.Message):
+    await message.answer("qabul qilindi")
+    img = Image.open(message.photo[-1].file_id)
+    text = pytesseract.image_to_string(img)
+    await message.answer(text)
 
 
 if __name__ == '__main__':

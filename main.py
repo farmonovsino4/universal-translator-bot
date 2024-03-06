@@ -1,24 +1,20 @@
 from aiogram import Bot, Dispatcher, executor, types
 import logging
 import os
-from dotenv import load_dotenv
 from googletrans import Translator
 from deep_translator import GoogleTranslator
 import pytesseract
 from PIL import Image
-from googletrans import Translator
 from gtts import gTTS
-import os
+from environs import Env
 
 translator = Translator()
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-load_dotenv()
-
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token="7082079364:AAGvpiEfAXb3VqxpO7mqDQy4RBhumKvlCc0")
+bot = Bot(token="")
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])

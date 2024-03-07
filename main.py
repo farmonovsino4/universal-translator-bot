@@ -23,13 +23,13 @@ dp = Dispatcher(bot)
 async def start(message: types.Message):
     await message.reply(f"Salom <b>{message.from_user.full_name}</b>\nmen universal tarjimon botman", parse_mode='html')
 
-@dp.message_handler()
+@dp.message_handler(content_types=['text'])
 async def message(message: types.Message):
     lang = translator.detect(message.text).lang
     if lang == 'en':
         translated_uz = GoogleTranslator(source='en', target='uz').translate(message.text)
         translated_ru = GoogleTranslator(source='en', target='ru').translate(message.text)
-        voice =gTTS(text=translated_ru, lang='ru').save('voice.mp3')
+        gTTS(text=translated_ru, lang='ru').save('voice.mp3')
         await message.answer(translated_uz)
         await message.answer(translated_ru)
         await message.answer_voice(open('voice.mp3', 'rb'))
@@ -37,16 +37,16 @@ async def message(message: types.Message):
         translated_en = GoogleTranslator(source='uz', target='en').translate(message.text)
         translated_ru = GoogleTranslator(source='uz', target='ru').translate(message.text)
         await message.answer(translated_en)
-        voice = gTTS(text=translated_en, lang='en').save('voice.mp3')
+        gTTS(text=translated_en, lang='en').save('voice.mp3')
         await message.answer_voice(open('voice.mp3', 'rb'))
         await message.answer(translated_ru)
-        voice = gTTS(text=translated_ru, lang='ru').save('voice.mp3')
+        gTTS(text=translated_ru, lang='ru').save('voice.mp3')
         await message.answer_voice(open('voice.mp3', 'rb'))
     elif lang == 'ru':
         translated_en = GoogleTranslator(source='ru', target='en').translate(message.text)
         translated_uz = GoogleTranslator(source='ru', target='uz').translate(message.text)
         await message.answer(translated_en)
-        voice = gTTS(text=translated_en, lang='ru').save('voice.mp3')
+        gTTS(text=translated_en, lang='ru').save('voice.mp3')
         await message.answer_voice(open('voice.mp3', 'rb'))
         await message.answer(translated_uz)
     os.remove("voice.mp3")
@@ -56,7 +56,7 @@ async def image_to_string(message: types.Message):
     await message.answer("qabul qilindi")
     photo = message.photo[-1].file_id
     file_path = await bot.get_file(photo)
-    image_bytes = await file_path.download()
+    await file_path.download()
     img = Image.open("photos/file_1.jpg")
     text = pytesseract.image_to_string(img)
     lang = translator.detect(text).lang

@@ -6,15 +6,16 @@ from deep_translator import GoogleTranslator
 import pytesseract
 from PIL import Image
 from gtts import gTTS
-from environs import Env
-
+from dotenv import load_dotenv
 translator = Translator()
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token="")
+load_dotenv()
+
+bot = Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
